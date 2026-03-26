@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Cuestionario · Kiko Martínez</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#fdf8f0;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2e1e10;}
+.hdr{background:#4a2e18;padding:24px 20px;text-align:center;}
+.hdr-name{font-family:Georgia,'Palatino Linotype',Palatino,serif;font-size:26px;color:#fdf4e8;margin-bottom:3px;}
+.hdr-name em{font-style:italic;color:#c4925a;}
+.hdr-sub{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#c4925a;margin-bottom:12px;}
+.hdr-deco{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;}
+.hdr-line{height:1px;width:50px;background:rgba(196,146,90,0.35);}
+.hdr-dot{width:4px;height:4px;background:#c4925a;transform:rotate(45deg);}
+.hdr-title{font-family:Georgia,'Palatino Linotype',Palatino,serif;font-size:14px;font-style:italic;color:rgba(253,244,232,0.7);}
+.intro{background:#fff;border-left:4px solid #c4925a;margin:18px 14px 0;padding:15px 17px;border-radius:0 12px 12px 0;}
+.intro p{font-size:13.5px;color:#6b4a30;line-height:1.75;}
+.intro-badge{display:inline-block;background:#f5ead8;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:#7a4e2d;margin:10px 0 8px;}
+.intro-box{background:#f5ead8;border-radius:10px;padding:12px 14px;margin-top:8px;border-left:3px solid #c4925a;}
+.intro-box p{font-size:13px;color:#4a2e18;line-height:1.75;}
+.form-wrap{padding:14px 14px 40px;}
+.personal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;background:#fff;border-radius:14px;border:1px solid #e0cdb8;padding:14px;}
+.personal-grid label{display:block;font-size:10px;font-weight:700;color:#a08060;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
+input[type=text],input[type=date]{width:100%;border:1.5px solid #e0cdb8;border-radius:8px;padding:9px 12px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;color:#2e1e10;background:#fdf8f0;-webkit-appearance:none;outline:none;}
+input[type=text]:focus,input[type=date]:focus{border-color:#c4925a;background:#fff;}
+.sec{background:#fff;border-radius:14px;border:1px solid #e0cdb8;margin-bottom:10px;overflow:hidden;}
+.sec-hdr{background:#4a2e18;padding:14px 16px;display:flex;align-items:center;gap:10px;}
+.sec-num{font-family:Georgia,serif;font-size:18px;color:rgba(196,146,90,0.5);min-width:22px;line-height:1;}
+.sec-label{font-size:12px;font-weight:700;color:#fdf4e8;flex:1;}
+.sec-body{padding:16px;}
+.q{margin-bottom:16px;}
+.q:last-child{margin-bottom:0;}
+.q-label{font-size:13px;font-weight:700;color:#2e1e10;margin-bottom:8px;line-height:1.4;display:flex;gap:6px;}
+.q-num{color:#c4925a;font-weight:700;flex-shrink:0;}
+textarea{width:100%;border:1.5px solid #e0cdb8;border-radius:8px;padding:9px 12px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;color:#2e1e10;background:#fdf8f0;-webkit-appearance:none;outline:none;resize:none;min-height:76px;}
+textarea:focus{border-color:#c4925a;background:#fff;}
+.opts{display:flex;flex-wrap:wrap;gap:7px;}
+.opt{display:flex;align-items:center;gap:7px;padding:8px 13px;border:1.5px solid #e0cdb8;border-radius:30px;cursor:pointer;font-size:12.5px;color:#6b4a30;background:#fdf8f0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-user-select:none;position:relative;}
+.opt.on{border-color:#7a4e2d;background:#fdf0e0;color:#4a2e18;font-weight:700;}
+.opt-dot{width:7px;height:7px;border-radius:50%;border:2px solid #e0cdb8;flex-shrink:0;pointer-events:none;}
+.opt.on .opt-dot{background:#7a4e2d;border-color:#7a4e2d;}
+.chk{display:flex;align-items:center;gap:9px;padding:9px 13px;border:1.5px solid #e0cdb8;border-radius:10px;cursor:pointer;font-size:12.5px;color:#6b4a30;background:#fdf8f0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;position:relative;}
+.chk.on{border-color:#7a4e2d;background:#fdf0e0;color:#4a2e18;font-weight:700;}
+.chk-box{width:18px;height:18px;border:2px solid #e0cdb8;border-radius:4px;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;pointer-events:none;}
+.chk.on .chk-box{background:#7a4e2d;border-color:#7a4e2d;}
+.sc{display:flex;gap:5px;flex-wrap:wrap;}
+.sc-btn{width:34px;height:34px;border:1.5px solid #e0cdb8;border-radius:8px;background:#fdf8f0;font-size:12px;font-weight:600;color:#a08060;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none;position:relative;}
+.sc-btn.on{background:#7a4e2d;border-color:#7a4e2d;color:#fff;}
+.sc-lbls{display:flex;justify-content:space-between;font-size:10px;color:#a08060;margin-top:4px;font-style:italic;}
+.hidden{display:none;}
+.consent-sec{background:#fff;border-radius:14px;border:1px solid #e0cdb8;padding:18px 16px;margin-bottom:10px;}
+.consent-title{font-size:11.5px;font-weight:700;color:#4a2e18;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;}
+.consent-text{font-size:11.5px;color:#6b4a30;line-height:1.8;margin-bottom:12px;background:#fdf8f0;border-radius:8px;padding:11px 13px;border:1px solid #e0cdb8;}
+.consent-text strong{color:#7a4e2d;}
+.c-row{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;border:1.5px solid #e0cdb8;border-radius:10px;background:#fdf8f0;cursor:pointer;margin-bottom:8px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;position:relative;}
+.c-row:last-of-type{margin-bottom:0;}
+.c-row.on{border-color:#4a7a3a;background:rgba(74,122,58,0.05);}
+.c-box{width:20px;height:20px;border:2px solid #e0cdb8;border-radius:5px;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+.c-row.on .c-box{background:#4a7a3a;border-color:#4a7a3a;}
+.c-lbl{font-size:12.5px;color:#6b4a30;line-height:1.5;}
+.c-lbl strong{color:#2e1e10;}
+.c-warn{display:none;font-size:12px;color:#c04a20;background:#fdf0e0;border:1px solid #e8a060;border-radius:8px;padding:10px 13px;margin-top:10px;}
+.submit-sec{background:#fff;border-radius:14px;border:1px solid #e0cdb8;padding:20px 16px;text-align:center;margin-top:10px;}
+.submit-title{font-family:Georgia,'Palatino Linotype',Palatino,serif;font-size:20px;color:#4a2e18;margin-bottom:6px;}
+.submit-text{font-size:13px;color:#a08060;line-height:1.7;margin-bottom:16px;}
+.btn-dl{display:block;width:100%;max-width:340px;margin:0 auto;padding:14px;background:#7a4e2d;color:#fff;border:none;border-radius:12px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14.5px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none;}
+@media(max-width:380px){.personal-grid{grid-template-columns:1fr;}.sc{gap:4px;}.sc-btn{width:29px;height:29px;font-size:11px;}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <p class="hdr-name">Kiko <em>Martínez</em></p>
+  <p class="hdr-sub">Terapeuta Natural</p>
+  <div class="hdr-deco"><div class="hdr-line"></div><div class="hdr-dot"></div><div class="hdr-line"></div></div>
+  <p class="hdr-title">Cuestionario de Valoración · Programa Personalizado</p>
+</div>
+
+<div class="intro">
+  <p>Hola, ¿qué tal estás? Gracias por dar este paso.</p>
+  <div class="intro-badge">⏱ Tiempo estimado: 15-20 minutos</div>
+  <div class="intro-box">
+    <p>🌿 <strong>Tómate tu tiempo y responde con total honestidad.</strong> No hay respuestas buenas ni malas. Cuanto más sincero/a seas, más ajustado estará tu programa. Nadie más verá estas respuestas — solo Kiko.</p>
+  </div>
+  <p style="margin-top:10px;font-size:13px;color:#a08060;font-style:italic;">Al terminar pulsa <strong style="color:#7a4e2d;font-style:normal;">"Descargar mis respuestas"</strong> y recibirás un PDF listo para enviarme.</p>
+</div>
+
+<div class="form-wrap">
+
+<div class="personal-grid">
+  <div><label>Nombre completo</label><input type="text" id="nombre" placeholder="Tu nombre y apellidos"></div>
+  <div><label>Fecha</label><input type="date" id="fecha"></div>
+</div>
+
+<!-- SEC 01 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">01</span><span class="sec-label">Datos personales y contexto general</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">1.</span><span>¿Cuántos años tienes?</span></div><input type="text" id="q1" placeholder="Tu edad"></div>
+<div class="q"><div class="q-label"><span class="q-num">2.</span><span>¿Cuál es tu ocupación o actividad principal?</span></div><input type="text" id="q2" placeholder="Profesión o actividad"></div>
+<div class="q"><div class="q-label"><span class="q-num">3.</span><span>¿Cómo definirías tu nivel de actividad física diaria?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g3')"><span class="opt-dot"></span>Muy sedentario/a</span><span class="opt" onclick="ro(this,'g3')"><span class="opt-dot"></span>Poco activo/a</span><span class="opt" onclick="ro(this,'g3')"><span class="opt-dot"></span>Moderadamente activo/a</span><span class="opt" onclick="ro(this,'g3')"><span class="opt-dot"></span>Muy activo/a</span></div><input type="hidden" id="q3"></div>
+<div class="q"><div class="q-label"><span class="q-num">4.</span><span>¿Con quién convives?</span></div><input type="text" id="q4" placeholder="Pareja, familia, solo/a…"></div>
+<div class="q"><div class="q-label"><span class="q-num">5.</span><span>¿Cómo describirías tu nivel de estrés habitual? (1=sin estrés · 10=muy alto)</span></div><div class="sc" id="sc5"></div><input type="hidden" id="q5"></div>
+<div class="q"><div class="q-label"><span class="q-num">6.</span><span>¿Cuántas horas duermes aproximadamente por noche?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g6')"><span class="opt-dot"></span>Menos de 5h</span><span class="opt" onclick="ro(this,'g6')"><span class="opt-dot"></span>5-6h</span><span class="opt" onclick="ro(this,'g6')"><span class="opt-dot"></span>6-7h</span><span class="opt" onclick="ro(this,'g6')"><span class="opt-dot"></span>7-8h o más</span></div><input type="hidden" id="q6"></div>
+<div class="q"><div class="q-label"><span class="q-num">7.</span><span>¿Cómo valoras la calidad de tu sueño? (1=muy malo · 10=excelente)</span></div><div class="sc" id="sc7"></div><input type="hidden" id="q7"></div>
+</div></div>
+
+<!-- SEC 02 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">02</span><span class="sec-label">Motivo principal y objetivos</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">8.</span><span>¿Cuál es la razón principal por la que solicitas este programa?</span></div><textarea id="q8" placeholder="Cuéntame con tus palabras…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">9.</span><span>¿Qué objetivos concretos te gustaría conseguir?</span></div><textarea id="q9" placeholder="Qué esperas lograr…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">10.</span><span>¿Cómo valoras tu estado de salud general ahora? (1=muy mal · 10=excelente)</span></div><div class="sc" id="sc10"></div><input type="hidden" id="q10"></div>
+<div class="q"><div class="q-label"><span class="q-num">11.</span><span>¿Has intentado antes mejorar esta situación? ¿Qué has probado?</span></div><textarea id="q11" placeholder="Tratamientos, ejercicios, hábitos…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">12.</span><span>¿Cuánto tiempo al día podrías dedicar al programa en casa?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g12')"><span class="opt-dot"></span>10-15 min</span><span class="opt" onclick="ro(this,'g12')"><span class="opt-dot"></span>15-30 min</span><span class="opt" onclick="ro(this,'g12')"><span class="opt-dot"></span>30-45 min</span><span class="opt" onclick="ro(this,'g12')"><span class="opt-dot"></span>Más de 45 min</span></div><input type="hidden" id="q12"></div>
+</div></div>
+
+<!-- SEC 03 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">03</span><span class="sec-label">Salud física y corporal</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">13.</span><span>¿Tienes algún diagnóstico médico o condición de salud conocida?</span></div><textarea id="q13" placeholder="Si no tienes, escribe ninguno"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">14.</span><span>¿Sufres o has sufrido alguna lesión musculoesquelética? (columna, articulaciones, hernias…)</span></div><textarea id="q14" placeholder="Describe zona y tipo de lesión"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">15.</span><span>¿Tienes dolor crónico o zonas del cuerpo que te molesten habitualmente?</span></div><textarea id="q15" placeholder="Señala dónde y cómo es el dolor"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">16.</span><span>¿Tienes alguna limitación de movilidad?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g16')"><span class="opt-dot"></span>Sí, importante</span><span class="opt" onclick="ro(this,'g16')"><span class="opt-dot"></span>Sí, leve</span><span class="opt" onclick="ro(this,'g16')"><span class="opt-dot"></span>No</span></div><input type="hidden" id="q16"></div>
+<div class="q"><div class="q-label"><span class="q-num">16b.</span><span>Si tienes limitación, descríbela:</span></div><input type="text" id="q16b" placeholder="Qué movimientos están limitados"></div>
+<div class="q"><div class="q-label"><span class="q-num">17.</span><span>¿Realizas o has realizado ejercicio físico con regularidad?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g17')"><span class="opt-dot"></span>Nunca</span><span class="opt" onclick="ro(this,'g17')"><span class="opt-dot"></span>Antes sí, ahora no</span><span class="opt" onclick="ro(this,'g17')"><span class="opt-dot"></span>Ocasionalmente</span><span class="opt" onclick="ro(this,'g17')"><span class="opt-dot"></span>Sí, regularmente</span></div><input type="hidden" id="q17"></div>
+<div class="q"><div class="q-label"><span class="q-num">17b.</span><span>¿Cuál y con qué frecuencia?</span></div><input type="text" id="q17b" placeholder="Ej: caminar 3 días, yoga 2 días…"></div>
+<div class="q"><div class="q-label"><span class="q-num">17c.</span><span>¿Con qué intensidad practicas habitualmente?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g17c')"><span class="opt-dot"></span>Suave (caminar, estirar)</span><span class="opt" onclick="ro(this,'g17c')"><span class="opt-dot"></span>Moderada (me activo pero puedo hablar)</span><span class="opt" onclick="ro(this,'g17c')"><span class="opt-dot"></span>Intensa (me cuesta hablar)</span><span class="opt" onclick="ro(this,'g17c')"><span class="opt-dot"></span>Muy intensa (entreno a tope)</span></div><input type="hidden" id="q17c"></div>
+<div class="q"><div class="q-label"><span class="q-num">17d.</span><span>¿Cuál es tu objetivo principal con el ejercicio?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g17d')"><span class="opt-dot"></span>Mantenerme activo/a</span><span class="opt" onclick="ro(this,'g17d')"><span class="opt-dot"></span>Perder peso o tonificar</span><span class="opt" onclick="ro(this,'g17d')"><span class="opt-dot"></span>Ganar fuerza y movilidad</span><span class="opt" onclick="ro(this,'g17d')"><span class="opt-dot"></span>Recuperarme de una lesión</span><span class="opt" onclick="ro(this,'g17d')"><span class="opt-dot"></span>Gestionar el estrés</span></div><input type="hidden" id="q17d"></div>
+<div class="q"><div class="q-label"><span class="q-num">17e.</span><span>¿Notas dolor o molestias durante o después de hacer ejercicio?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g17e')"><span class="opt-dot"></span>No, ninguna</span><span class="opt" onclick="ro(this,'g17e')"><span class="opt-dot"></span>A veces leve</span><span class="opt" onclick="ro(this,'g17e')"><span class="opt-dot"></span>Sí, con frecuencia</span><span class="opt" onclick="ro(this,'g17e')"><span class="opt-dot"></span>Por eso he dejado de hacerlo</span></div><input type="hidden" id="q17e"></div>
+<div class="q"><div class="q-label"><span class="q-num">17f.</span><span>¿Has tenido que abandonar alguna actividad deportiva por lesión o salud?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g17f')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g17f')"><span class="opt-dot"></span>Sí, temporalmente</span><span class="opt" onclick="ro(this,'g17f')"><span class="opt-dot"></span>Sí, definitivamente</span></div><input type="hidden" id="q17f"></div>
+<div class="q"><div class="q-label"><span class="q-num">18.</span><span>¿Cómo es tu postura habitual? (trabajo de oficina, conducción, trabajo físico…)</span></div><textarea id="q18" placeholder="Describe tu postura más frecuente"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">19.</span><span>¿Tienes alguna patología que limite el ejercicio? (cardíaca, respiratoria, osteoporosis…)</span></div><textarea id="q19" placeholder="Si no tienes, escribe ninguna"></textarea></div>
+</div></div>
+
+<!-- SEC 04 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">04</span><span class="sec-label">Alimentación y nutrición</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">20.</span><span>¿Cómo describirías tu alimentación habitual?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g20')"><span class="opt-dot"></span>Muy desordenada</span><span class="opt" onclick="ro(this,'g20')"><span class="opt-dot"></span>Irregular</span><span class="opt" onclick="ro(this,'g20')"><span class="opt-dot"></span>Bastante equilibrada</span><span class="opt" onclick="ro(this,'g20')"><span class="opt-dot"></span>Muy saludable</span></div><input type="hidden" id="q20"></div>
+<div class="q"><div class="q-label"><span class="q-num">21.</span><span>¿Tienes alguna intolerancia, alergia o preferencia alimentaria? (marca todas las que apliquen)</span></div><div class="opts"><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Gluten</span><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Lácteos</span><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Fructosa</span><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Vegano/a</span><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Vegetariano/a</span><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Ninguna</span><span class="chk" onclick="ck(this,'q21')"><span class="chk-box"></span>Otras</span></div><input type="hidden" id="q21"></div>
+<div class="q"><div class="q-label"><span class="q-num">21b.</span><span>Si marcaste "Otras", especifica:</span></div><input type="text" id="q21b" placeholder="Describe tu intolerancia o preferencia"></div>
+<div class="q"><div class="q-label"><span class="q-num">22.</span><span>¿Cuántos vasos de agua bebes al día?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g22')"><span class="opt-dot"></span>Menos de 3</span><span class="opt" onclick="ro(this,'g22')"><span class="opt-dot"></span>3-5 vasos</span><span class="opt" onclick="ro(this,'g22')"><span class="opt-dot"></span>6-8 vasos</span><span class="opt" onclick="ro(this,'g22')"><span class="opt-dot"></span>Más de 8</span></div><input type="hidden" id="q22"></div>
+<div class="q"><div class="q-label"><span class="q-num">23.</span><span>¿Consumes habitualmente alguno de estos? (puedes marcar varios)</span></div><div class="opts"><span class="chk" onclick="ck(this,'q23')"><span class="chk-box"></span>Alcohol</span><span class="chk" onclick="ck(this,'q23')"><span class="chk-box"></span>Café / Teína</span><span class="chk" onclick="ck(this,'q23')"><span class="chk-box"></span>Azúcar en exceso</span><span class="chk" onclick="ck(this,'q23')"><span class="chk-box"></span>Ultraprocesados</span><span class="chk" onclick="ck(this,'q23')"><span class="chk-box"></span>Ninguno</span></div><input type="hidden" id="q23"></div>
+<div class="q"><div class="q-label"><span class="q-num">24.</span><span>¿Tomas actualmente algún suplemento nutricional o vitamínico?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g24')"><span class="opt-dot"></span>Sí</span><span class="opt" onclick="ro(this,'g24')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g24')"><span class="opt-dot"></span>A veces</span></div><input type="hidden" id="q24"></div>
+<div class="q"><div class="q-label"><span class="q-num">24b.</span><span>Si tomas suplementos, ¿cuáles?</span></div><input type="text" id="q24b" placeholder="Nombra los suplementos que tomas"></div>
+<div class="q"><div class="q-label"><span class="q-num">25.</span><span>¿Hay aspectos de tu alimentación que te preocupen o quieras mejorar?</span></div><textarea id="q25" placeholder="Cuéntame libremente…"></textarea></div>
+</div></div>
+
+<!-- SEC 05 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">05</span><span class="sec-label">Salud emocional</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">26.</span><span>¿Cómo describirías tu estado emocional últimamente?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g26')"><span class="opt-dot"></span>Apagado/a o triste</span><span class="opt" onclick="ro(this,'g26')"><span class="opt-dot"></span>Con ansiedad o nerviosismo</span><span class="opt" onclick="ro(this,'g26')"><span class="opt-dot"></span>Estable</span><span class="opt" onclick="ro(this,'g26')"><span class="opt-dot"></span>Bien en general</span></div><input type="hidden" id="q26"></div>
+<div class="q"><div class="q-label"><span class="q-num">27.</span><span>¿Tienes herramientas para gestionar el estrés o las emociones difíciles?</span></div><textarea id="q27" placeholder="Qué haces cuando te sientes mal…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">28.</span><span>¿Hay situaciones en tu vida que estén afectando a tu bienestar en este momento?</span></div><textarea id="q28" placeholder="Es confidencial, puedes ser tan detallado/a como quieras"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">29.</span><span>¿Cómo valoras tu capacidad para desconectar mentalmente? (1=no consigo · 10=muy bien)</span></div><div class="sc" id="sc29"></div><input type="hidden" id="q29"></div>
+<div class="q"><div class="q-label"><span class="q-num">30.</span><span>¿Practicas actualmente alguna técnica de relajación o mindfulness?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g30')"><span class="opt-dot"></span>Sí, regularmente</span><span class="opt" onclick="ro(this,'g30')"><span class="opt-dot"></span>A veces</span><span class="opt" onclick="ro(this,'g30')"><span class="opt-dot"></span>Lo he intentado</span><span class="opt" onclick="ro(this,'g30')"><span class="opt-dot"></span>No, nunca</span></div><input type="hidden" id="q30"></div>
+<div class="q"><div class="q-label"><span class="q-num">31.</span><span>¿Tienes apoyo emocional en tu entorno cercano?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g31')"><span class="opt-dot"></span>Sí, mucho</span><span class="opt" onclick="ro(this,'g31')"><span class="opt-dot"></span>Algo</span><span class="opt" onclick="ro(this,'g31')"><span class="opt-dot"></span>Poco</span><span class="opt" onclick="ro(this,'g31')"><span class="opt-dot"></span>No</span></div><input type="hidden" id="q31"></div>
+<div class="q"><div class="q-label"><span class="q-num">32.</span><span>¿Hay algo en el plano emocional que quieras trabajar?</span></div><textarea id="q32" placeholder="Lo que sientas que quieres compartir…"></textarea></div>
+</div></div>
+
+<!-- SEC 06 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">06</span><span class="sec-label">Fitoterapia y suplementación natural</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">33.</span><span>¿Has utilizado antes plantas medicinales, remedios naturales o suplementos?</span></div><textarea id="q33" placeholder="Cuáles, para qué y qué resultado obtuviste…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">34.</span><span>¿Estás tomando actualmente algún medicamento o tratamiento médico?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g34')"><span class="opt-dot"></span>Sí</span><span class="opt" onclick="ro(this,'g34')"><span class="opt-dot"></span>No</span></div><input type="hidden" id="q34"></div>
+<div class="q"><div class="q-label"><span class="q-num">34b.</span><span>Si tomas medicación, ¿cuál? (importante para evitar interacciones)</span></div><input type="text" id="q34b" placeholder="Nombre del medicamento y dosis"></div>
+<div class="q"><div class="q-label"><span class="q-num">35.</span><span>¿Tienes alguna alergia a plantas, aceites esenciales o productos naturales?</span></div><input type="text" id="q35" placeholder="Escribe ninguna si no tienes"></div>
+<div class="q"><div class="q-label"><span class="q-num">36.</span><span>¿Tienes alguna condición hepática, renal o tiroidea?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g36')"><span class="opt-dot"></span>Sí</span><span class="opt" onclick="ro(this,'g36')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g36')"><span class="opt-dot"></span>No lo sé</span></div><input type="hidden" id="q36"></div>
+<div class="q"><div class="q-label"><span class="q-num">36b.</span><span>Si respondiste Sí, descríbela:</span></div><input type="text" id="q36b" placeholder="Tipo de condición y si está tratada"></div>
+<div class="q"><div class="q-label"><span class="q-num">37.</span><span>¿Estarías dispuesto/a a incorporar infusiones o plantas en tu rutina diaria?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g37')"><span class="opt-dot"></span>Sí, con gusto</span><span class="opt" onclick="ro(this,'g37')"><span class="opt-dot"></span>Depende del sabor/formato</span><span class="opt" onclick="ro(this,'g37')"><span class="opt-dot"></span>Prefiero cápsulas</span><span class="opt" onclick="ro(this,'g37')"><span class="opt-dot"></span>Prefiero no tomar nada</span></div><input type="hidden" id="q37"></div>
+</div></div>
+
+<!-- SEC 07 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">07</span><span class="sec-label">Salud hormonal y ciclo vital</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">47.</span><span>¿Cuál es tu sexo biológico?</span></div><div class="opts"><span class="opt" id="sexo-m" onclick="ro(this,'g47');showHormonal(true)"><span class="opt-dot"></span>Mujer</span><span class="opt" onclick="ro(this,'g47');showHormonal(false)"><span class="opt-dot"></span>Hombre</span><span class="opt" onclick="ro(this,'g47');showHormonal(false)"><span class="opt-dot"></span>Prefiero no decirlo</span></div><input type="hidden" id="q47"></div>
+<div id="bloque-hormonal" class="hidden">
+<div class="q"><div class="q-label"><span class="q-num">47b.</span><span>¿Estás embarazada o existe la posibilidad de que lo estés?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g47b')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g47b')"><span class="opt-dot"></span>Sí, estoy embarazada</span><span class="opt" onclick="ro(this,'g47b')"><span class="opt-dot"></span>Podría estarlo</span><span class="opt" onclick="ro(this,'g47b')"><span class="opt-dot"></span>Estoy en periodo de lactancia</span></div><input type="hidden" id="q47b"></div>
+<div class="q"><div class="q-label"><span class="q-num">48.</span><span>¿Cómo describirías tu ciclo menstrual actualmente?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g48')"><span class="opt-dot"></span>Regular y sin molestias</span><span class="opt" onclick="ro(this,'g48')"><span class="opt-dot"></span>Irregular</span><span class="opt" onclick="ro(this,'g48')"><span class="opt-dot"></span>Con dolor o síntomas intensos</span><span class="opt" onclick="ro(this,'g48')"><span class="opt-dot"></span>En menopausia o perimenopausia</span><span class="opt" onclick="ro(this,'g48')"><span class="opt-dot"></span>No aplica</span></div><input type="hidden" id="q48"></div>
+<div class="q"><div class="q-label"><span class="q-num">49.</span><span>¿Cuáles de estos síntomas hormonales tienes o has tenido? (marca todos los que apliquen)</span></div><div class="opts"><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Síndrome premenstrual (SPM)</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Sofocos o calores</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Sudoración nocturna</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Cambios de humor cíclicos</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Retención de líquidos</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Dolor menstrual intenso</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Sangrado irregular o abundante</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Sequedad vaginal</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Pérdida de libido</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Fatiga hormonal</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Insomnio relacionado con el ciclo</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Migrañas hormonales</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Acné hormonal</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Caída de cabello</span><span class="chk" onclick="ck(this,'q49')"><span class="chk-box"></span>Ninguno</span></div><input type="hidden" id="q49"></div>
+<div class="q"><div class="q-label"><span class="q-num">50.</span><span>¿Tomas o has tomado anticonceptivos hormonales, THS u otra medicación hormonal?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g50')"><span class="opt-dot"></span>Sí, actualmente</span><span class="opt" onclick="ro(this,'g50')"><span class="opt-dot"></span>Sí, en el pasado</span><span class="opt" onclick="ro(this,'g50')"><span class="opt-dot"></span>No, nunca</span></div><input type="hidden" id="q50"></div>
+<div class="q"><div class="q-label"><span class="q-num">50b.</span><span>Si tomas o tomaste, ¿cuál?</span></div><input type="text" id="q50b" placeholder="Nombre del tratamiento hormonal"></div>
+</div>
+<div class="q"><div class="q-label"><span class="q-num">51.</span><span>¿Tienes o te han diagnosticado alguna alteración tiroidea, de suprarrenales u otras glándulas?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g51')"><span class="opt-dot"></span>Sí</span><span class="opt" onclick="ro(this,'g51')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g51')"><span class="opt-dot"></span>No lo sé</span></div><input type="hidden" id="q51"></div>
+<div class="q"><div class="q-label"><span class="q-num">51b.</span><span>Si respondiste Sí, descríbela:</span></div><input type="text" id="q51b" placeholder="Hipotiroidismo, hipertiroidismo, Hashimoto…"></div>
+</div></div>
+
+<!-- SEC 08 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">08</span><span class="sec-label">Salud digestiva y microbiota</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">52.</span><span>¿Cómo describirías tu digestión en general?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g52')"><span class="opt-dot"></span>Sin problemas</span><span class="opt" onclick="ro(this,'g52')"><span class="opt-dot"></span>Algo pesada o lenta</span><span class="opt" onclick="ro(this,'g52')"><span class="opt-dot"></span>Con molestias frecuentes</span><span class="opt" onclick="ro(this,'g52')"><span class="opt-dot"></span>Con problemas importantes</span></div><input type="hidden" id="q52"></div>
+<div class="q"><div class="q-label"><span class="q-num">53.</span><span>¿Sufres alguno de estos síntomas con frecuencia? (marca todos los que apliquen)</span></div><div class="opts"><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Hinchazón abdominal</span><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Estreñimiento</span><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Diarrea</span><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Gases</span><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Acidez o reflujo</span><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Náuseas</span><span class="chk" onclick="ck(this,'q53')"><span class="chk-box"></span>Ninguno</span></div><input type="hidden" id="q53"></div>
+<div class="q"><div class="q-label"><span class="q-num">54.</span><span>¿Te han diagnosticado alguna patología digestiva?</span></div><textarea id="q54" placeholder="Colon irritable, Crohn, colitis, gastritis, SIBO…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">55.</span><span>¿Has tomado antibióticos en el último año?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g55')"><span class="opt-dot"></span>Sí, varias veces</span><span class="opt" onclick="ro(this,'g55')"><span class="opt-dot"></span>Sí, una vez</span><span class="opt" onclick="ro(this,'g55')"><span class="opt-dot"></span>No</span></div><input type="hidden" id="q55"></div>
+<div class="q"><div class="q-label"><span class="q-num">56.</span><span>¿Consumes alimentos fermentados o probióticos habitualmente?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g56')"><span class="opt-dot"></span>Sí, a menudo</span><span class="opt" onclick="ro(this,'g56')"><span class="opt-dot"></span>A veces</span><span class="opt" onclick="ro(this,'g56')"><span class="opt-dot"></span>Casi nunca</span><span class="opt" onclick="ro(this,'g56')"><span class="opt-dot"></span>No sé qué son</span></div><input type="hidden" id="q56"></div>
+<div class="q"><div class="q-label"><span class="q-num">57.</span><span>¿Hay alimentos que notes que te sientan mal sin intolerancia diagnosticada?</span></div><textarea id="q57" placeholder="Lácteos, gluten, legumbres, picante…"></textarea></div>
+</div></div>
+
+<!-- SEC 09 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">09</span><span class="sec-label">Descanso en profundidad</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">58.</span><span>¿Tienes dificultad para conciliar el sueño?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g58')"><span class="opt-dot"></span>Nunca</span><span class="opt" onclick="ro(this,'g58')"><span class="opt-dot"></span>A veces</span><span class="opt" onclick="ro(this,'g58')"><span class="opt-dot"></span>Con frecuencia</span><span class="opt" onclick="ro(this,'g58')"><span class="opt-dot"></span>Casi siempre</span></div><input type="hidden" id="q58"></div>
+<div class="q"><div class="q-label"><span class="q-num">59.</span><span>¿Te despiertas durante la noche o muy temprano sin poder volver a dormir?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g59')"><span class="opt-dot"></span>Nunca</span><span class="opt" onclick="ro(this,'g59')"><span class="opt-dot"></span>A veces</span><span class="opt" onclick="ro(this,'g59')"><span class="opt-dot"></span>Con frecuencia</span><span class="opt" onclick="ro(this,'g59')"><span class="opt-dot"></span>Casi siempre</span></div><input type="hidden" id="q59"></div>
+<div class="q"><div class="q-label"><span class="q-num">60.</span><span>¿Te levantas descansado/a o cansado/a?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g60')"><span class="opt-dot"></span>Descansado/a siempre</span><span class="opt" onclick="ro(this,'g60')"><span class="opt-dot"></span>Normalmente bien</span><span class="opt" onclick="ro(this,'g60')"><span class="opt-dot"></span>A veces cansado/a</span><span class="opt" onclick="ro(this,'g60')"><span class="opt-dot"></span>Cansado/a casi siempre</span></div><input type="hidden" id="q60"></div>
+<div class="q"><div class="q-label"><span class="q-num">61.</span><span>¿Roncas o te han dicho que tienes pausas en la respiración al dormir?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g61')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g61')"><span class="opt-dot"></span>Sí, me lo han dicho</span><span class="opt" onclick="ro(this,'g61')"><span class="opt-dot"></span>Tengo apnea diagnosticada</span></div><input type="hidden" id="q61"></div>
+<div class="q"><div class="q-label"><span class="q-num">62.</span><span>¿Sientes que el estrés o la ansiedad afectan a tu sueño?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g62')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g62')"><span class="opt-dot"></span>A veces</span><span class="opt" onclick="ro(this,'g62')"><span class="opt-dot"></span>Sí, bastante</span><span class="opt" onclick="ro(this,'g62')"><span class="opt-dot"></span>Es mi principal problema para dormir</span></div><input type="hidden" id="q62"></div>
+<div class="q"><div class="q-label"><span class="q-num">63.</span><span>¿Qué haces habitualmente la última hora antes de dormir?</span></div><textarea id="q63" placeholder="Móvil, televisión, lectura, meditación…"></textarea></div>
+</div></div>
+
+<!-- SEC 10 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">10</span><span class="sec-label">Dolor, historial familiar y entorno</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">64.</span><span>Si tienes dolor habitual, ¿cómo lo describirías?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g64')"><span class="opt-dot"></span>Punzante o agudo</span><span class="opt" onclick="ro(this,'g64')"><span class="opt-dot"></span>Sordo y continuo</span><span class="opt" onclick="ro(this,'g64')"><span class="opt-dot"></span>Intermitente</span><span class="opt" onclick="ro(this,'g64')"><span class="opt-dot"></span>Sensación de presión</span><span class="opt" onclick="ro(this,'g64')"><span class="opt-dot"></span>No tengo dolor habitual</span></div><input type="hidden" id="q64"></div>
+<div class="q"><div class="q-label"><span class="q-num">65.</span><span>¿Qué agrava tu dolor o malestar físico?</span></div><textarea id="q65" placeholder="El frío, el estrés, estar sentado/a, ciertos movimientos…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">66.</span><span>¿Qué lo alivia?</span></div><textarea id="q66" placeholder="El calor, el movimiento, el reposo, el masaje…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">67.</span><span>¿Hay enfermedades relevantes en tu familia directa? (marca todas las que apliquen)</span></div><div class="opts"><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Enfermedades cardiovasculares</span><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Diabetes</span><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Cáncer</span><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Tiroides</span><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Enfermedades autoinmunes</span><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Salud mental</span><span class="chk" onclick="ck(this,'q67')"><span class="chk-box"></span>Ninguna relevante</span></div><input type="hidden" id="q67"></div>
+<div class="q"><div class="q-label"><span class="q-num">68.</span><span>¿Cómo es tu entorno laboral?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g68')"><span class="opt-dot"></span>Trabajo de oficina / pantallas</span><span class="opt" onclick="ro(this,'g68')"><span class="opt-dot"></span>Trabajo de pie o físico</span><span class="opt" onclick="ro(this,'g68')"><span class="opt-dot"></span>Trabajo mixto</span><span class="opt" onclick="ro(this,'g68')"><span class="opt-dot"></span>No trabajo actualmente</span></div><input type="hidden" id="q68"></div>
+<div class="q"><div class="q-label"><span class="q-num">69.</span><span>¿Cuántas horas trabajas aproximadamente al día?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g69')"><span class="opt-dot"></span>Menos de 6h</span><span class="opt" onclick="ro(this,'g69')"><span class="opt-dot"></span>6-8h</span><span class="opt" onclick="ro(this,'g69')"><span class="opt-dot"></span>8-10h</span><span class="opt" onclick="ro(this,'g69')"><span class="opt-dot"></span>Más de 10h</span></div><input type="hidden" id="q69"></div>
+<div class="q"><div class="q-label"><span class="q-num">70.</span><span>¿Hay situaciones de estrés, conflicto o insatisfacción en tu entorno laboral?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g70')"><span class="opt-dot"></span>No</span><span class="opt" onclick="ro(this,'g70')"><span class="opt-dot"></span>Algo</span><span class="opt" onclick="ro(this,'g70')"><span class="opt-dot"></span>Bastante</span><span class="opt" onclick="ro(this,'g70')"><span class="opt-dot"></span>Es una fuente importante de malestar</span></div><input type="hidden" id="q70"></div>
+<div class="q"><div class="q-label"><span class="q-num">71.</span><span>¿Cómo es tu relación con tu cuerpo e imagen personal?</span></div><div class="opts"><span class="opt" onclick="ro(this,'g71')"><span class="opt-dot"></span>Positiva y en paz</span><span class="opt" onclick="ro(this,'g71')"><span class="opt-dot"></span>Con altibajos</span><span class="opt" onclick="ro(this,'g71')"><span class="opt-dot"></span>A veces me cuesta aceptarme</span><span class="opt" onclick="ro(this,'g71')"><span class="opt-dot"></span>Es algo que me genera malestar</span></div><input type="hidden" id="q71"></div>
+<div class="q"><div class="q-label"><span class="q-num">71b.</span><span>Si quieres, puedes contarme algo más sobre ello:</span></div><textarea id="q71b" placeholder="Todo lo que quieras compartir es bienvenido…"></textarea></div>
+</div></div>
+
+<!-- SEC 11 -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-num">11</span><span class="sec-label">Contexto adicional y cierre</span></div>
+<div class="sec-body">
+<div class="q"><div class="q-label"><span class="q-num">72.</span><span>¿Hay algo importante sobre tu salud o situación actual que no se haya recogido?</span></div><textarea id="q72" placeholder="Todo lo que creas relevante…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">73.</span><span>¿Qué esperas sentir cuando el programa esté funcionando bien para ti?</span></div><textarea id="q73" placeholder="Describe cómo te imaginas en tu mejor versión…"></textarea></div>
+<div class="q"><div class="q-label"><span class="q-num">74.</span><span>¿Hay algo que te preocupe o quieras preguntarme antes de empezar?</span></div><textarea id="q74" placeholder="Cualquier duda o inquietud es bienvenida…"></textarea></div>
+</div></div>
+
+<!-- CONSENTIMIENTO -->
+<div class="consent-sec">
+  <div class="consent-title">Consentimiento informado y protección de datos</div>
+  <div class="consent-text">
+    En cumplimiento del <strong>RGPD (UE 2016/679)</strong> y la <strong>LOPDGDD</strong>:<br><br>
+    <strong>Responsable:</strong> Kiko Martínez · Terapeuta Natural<br>
+    <strong>Finalidad:</strong> Elaboración de tu programa terapéutico personalizado.<br>
+    <strong>Confidencialidad:</strong> Tus datos no serán cedidos a terceros.<br>
+    <strong>Derechos:</strong> Puedes ejercer acceso, rectificación, supresión y portabilidad contactando con Kiko Martínez.
+  </div>
+  <div class="c-row" id="c1" data-cid="c1" onclick="togC(this.dataset.cid)"><div class="c-box" id="c1b"></div><div class="c-lbl"><strong>Autorizo el tratamiento de mis datos</strong> con la finalidad exclusiva de recibir el programa terapéutico personalizado.</div></div>
+  <div class="c-row" id="c2" data-cid="c2" onclick="togC(this.dataset.cid)"><div class="c-box" id="c2b"></div><div class="c-lbl"><strong>He leído y acepto la información</strong> sobre protección de datos y entiendo que puedo retirar mi consentimiento en cualquier momento.</div></div>
+  <div class="c-row" id="c3" data-cid="c3" onclick="togC(this.dataset.cid)"><div class="c-box" id="c3b"></div><div class="c-lbl"><strong>Confirmo que los datos facilitados son verídicos.</strong></div></div>
+  <div class="c-warn" id="c-warn">⚠️ Es necesario aceptar los tres puntos antes de descargar.</div>
+</div>
+
+<!-- SUBMIT -->
+<div class="submit-sec">
+  <div class="submit-title">¿Listo para enviar?</div>
+  <p class="submit-text">Descarga tu PDF y envíamelo. Recibirás tu programa personalizado en el menor tiempo posible.</p>
+  <button class="btn-dl">⬇ Descargar mis respuestas en PDF</button>
+</div>
+
+</div><!-- /form-wrap -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+<script>
+// ── Utilidad: añade listener a click Y touchend para máxima compatibilidad iOS ──
+function onTap(el, fn){
+  var fired=false;
+  el.addEventListener('touchend', function(e){
+    e.preventDefault();
+    if(fired) return;
+    fired=true;
+    setTimeout(function(){fired=false;},400);
+    fn(el);
+  }, {passive:false});
+  el.addEventListener('click', function(e){
+    if(!fired) fn(el);
+  });
+}
+
+// ESCALAS - generar estáticamente
+var scaleIds=[['sc5','q5'],['sc7','q7'],['sc10','q10'],['sc29','q29']];
+scaleIds.forEach(function(pair){
+  var el=document.getElementById(pair[0]);
+  if(!el)return;
+  var html='';
+  for(var i=1;i<=10;i++){
+    html+='<button type="button" class="sc-btn" data-hid="'+pair[1]+'" data-v="'+i+'">'+i+'</button>';
+  }
+  el.innerHTML=html;
+  el.querySelectorAll('.sc-btn').forEach(function(btn){
+    onTap(btn, function(b){ scSel(b); });
+  });
+});
+
+// RADIO - enlazar todos los .opt tras cargar el DOM
+function bindRadios(){
+  document.querySelectorAll('.opt').forEach(function(el){
+    var oc=el.getAttribute('onclick');
+    if(!oc) return;
+    var m=oc.match(/ro\(this,'([^']+)'\)/);
+    var sh=oc.match(/showHormonal\((true|false)\)/);
+    if(!m) return;
+    var grp=m[1];
+    var showVal=sh ? (sh[1]==='true') : null;
+    el.removeAttribute('onclick');
+    onTap(el, function(e){
+      document.querySelectorAll('[data-rgrp="'+grp+'"]').forEach(function(x){x.classList.remove('on');});
+      e.classList.add('on');
+      var hid=document.getElementById(grp.replace('g','q'));
+      if(hid) hid.value=e.querySelector('span:last-child') ? e.querySelector('span:last-child').textContent.trim() : e.textContent.replace(/[\u2713]/g,'').trim();
+      if(showVal!==null) showHormonal(showVal);
+    });
+    el.setAttribute('data-rgrp', grp);
+  });
+}
+
+// CHECKBOX - enlazar todos los .chk tras cargar el DOM
+function bindCheckboxes(){
+  document.querySelectorAll('.chk').forEach(function(el){
+    var oc=el.getAttribute('onclick');
+    if(!oc) return;
+    var m=oc.match(/ck\(this,'([^']+)'\)/);
+    if(!m) return;
+    var qid=m[1];
+    el.removeAttribute('onclick');
+    el.setAttribute('data-cqid', qid);
+    onTap(el, function(e){ ckFn(e, qid); });
+  });
+}
+
+function ckFn(el, qid){
+  el.classList.toggle('on');
+  var box=el.querySelector('.chk-box');
+  if(box) box.textContent=el.classList.contains('on')?'✓':'';
+  var vals=[];
+  document.querySelectorAll('[data-cqid="'+qid+'"].on').forEach(function(e){
+    var txt=e.textContent.replace('✓','').trim();
+    if(txt) vals.push(txt);
+  });
+  var hid=document.getElementById(qid);
+  if(hid) hid.value=vals.join(', ');
+}
+
+// ESCALA
+function scSel(btn){
+  var qid=btn.dataset.hid;
+  document.querySelectorAll('[data-hid="'+qid+'"]').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var hid=document.getElementById(qid);
+  if(hid) hid.value=btn.dataset.v+'/10';
+}
+
+// HORMONAL CONDICIONAL
+function showHormonal(show){
+  var blk=document.getElementById('bloque-hormonal');
+  if(blk) blk.className=show?'':'hidden';
+}
+
+// CONSENTIMIENTO
+var cState={c1:false,c2:false,c3:false};
+function togC(id){
+  cState[id]=!cState[id];
+  var row=document.getElementById(id);
+  var box=document.getElementById(id+'b');
+  if(cState[id]){row.classList.add('on');if(box)box.textContent='✓';}
+  else{row.classList.remove('on');if(box)box.textContent='';}
+  document.getElementById('c-warn').style.display='none';
+}
+
+function bindConsent(){
+  ['c1','c2','c3'].forEach(function(id){
+    var row=document.getElementById(id);
+    if(!row) return;
+    row.removeAttribute('onclick');
+    onTap(row, function(){ togC(id); });
+  });
+}
+
+// PDF
+function genPDF(){
+  if(!cState.c1||!cState.c2||!cState.c3){
+    document.getElementById('c-warn').style.display='block';
+    document.getElementById('c1').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  if(typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF){
+    alert('El generador de PDF no está disponible. Por favor, haz capturas de pantalla de tus respuestas y envíaselas a Kiko por WhatsApp.');
+    return;
+  }
+  try{
+    var jsPDF=window.jspdf.jsPDF;
+    var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    var nombre=document.getElementById('nombre').value.trim()||'Sin especificar';
+    var fecha=document.getElementById('fecha').value||new Date().toLocaleDateString('es-ES');
+    var PW=210,ML=18,CW=174;
+    var y=0;
+    var TD=[74,46,24],TL=[196,146,90],CR=[253,248,240],BL=[255,255,255],TX=[46,30,16];
+
+    function addPg(){
+      doc.addPage();y=14;
+      doc.setFillColor(TD[0],TD[1],TD[2]);doc.rect(0,0,PW,9,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(TL[0],TL[1],TL[2]);
+      doc.text('Kiko Martínez · Terapeuta Natural · Cuestionario de Valoración',ML,6);
+      doc.text(nombre,PW-ML,6,{align:'right'});y=16;
+    }
+    function ck2(h){if(y+h>281)addPg();}
+
+    // Portada
+    doc.setFillColor(TD[0],TD[1],TD[2]);doc.rect(0,0,PW,52,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(CR[0],CR[1],CR[2]);
+    doc.text('Kiko Martínez',PW/2,20,{align:'center'});
+    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(TL[0],TL[1],TL[2]);
+    doc.text('TERAPEUTA NATURAL',PW/2,27,{align:'center'});
+    doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(200,170,130);
+    doc.text('Cuestionario de Valoración · Programa Personalizado',PW/2,44,{align:'center'});
+    y=62;
+    doc.setFillColor(CR[0],CR[1],CR[2]);doc.roundedRect(ML,y,CW,20,2,2,'F');
+    doc.setDrawColor(TL[0],TL[1],TL[2]);doc.setLineWidth(0.3);doc.roundedRect(ML,y,CW,20,2,2,'S');
+    doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(150,120,90);
+    doc.text('NOMBRE',ML+5,y+6.5);doc.text('FECHA',PW/2+4,y+6.5);
+    doc.setFontSize(10);doc.setTextColor(TX[0],TX[1],TX[2]);
+    doc.text(nombre,ML+5,y+14);doc.text(fecha,PW/2+4,y+14);
+    y+=28;
+
+    // Preguntas
+    var secs=document.querySelectorAll('.sec');
+    secs.forEach(function(sec){
+      var hdr=sec.querySelector('.sec-label');
+      var num=sec.querySelector('.sec-num');
+      ck2(14);
+      doc.setFillColor(TD[0],TD[1],TD[2]);doc.roundedRect(ML,y,CW,9,2,2,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(TL[0],TL[1],TL[2]);
+      doc.text(num.textContent,ML+3,y+6.2);
+      doc.setTextColor(253,244,232);
+      doc.text(hdr.textContent.toUpperCase(),ML+10,y+6.2);
+      y+=12;
+      var qs=sec.querySelectorAll('.q');
+      qs.forEach(function(q){
+        if(q.style.display==='none') return;
+        var lbl=q.querySelector('.q-label');
+        if(!lbl) return;
+        var qnum=q.querySelector('.q-num');
+        var qtxt=lbl.textContent.replace(qnum.textContent,'').trim();
+        var hid=q.querySelector('input[type=hidden],textarea');
+        var aRaw='';
+        if(hid){
+          if(hid.tagName==='TEXTAREA') aRaw=hid.value.trim();
+          else aRaw=hid.value.trim();
+        } else {
+          var inp=q.querySelector('input[type=text],input[type=date]');
+          if(inp) aRaw=inp.value.trim();
+        }
+        var a=aRaw||'—';
+        doc.setFont('helvetica','bold');doc.setFontSize(8);
+        var qL=doc.splitTextToSize((qnum?qnum.textContent:'')+' '+qtxt,CW-10);
+        doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+        var aL=doc.splitTextToSize(a,CW-12);
+        var bH=qL.length*4.2+aL.length*4.5+9;
+        ck2(bH+3);
+        doc.setFillColor(aRaw?BL[0]:252,aRaw?BL[1]:248,aRaw?BL[2]:245);
+        doc.roundedRect(ML,y,CW,bH,2,2,'F');
+        doc.setDrawColor(aRaw?TL[0]:210,aRaw?TL[1]:200,aRaw?TL[2]:185);
+        doc.setLineWidth(aRaw?0.4:0.2);doc.roundedRect(ML,y,CW,bH,2,2,'S');
+        if(aRaw){doc.setFillColor(TL[0],TL[1],TL[2]);doc.roundedRect(ML,y,2,bH,1,1,'F');}
+        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(TL[0],TL[1],TL[2]);
+        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(TX[0],TX[1],TX[2]);
+        doc.text(qL,ML+8,y+5);
+        var ay=y+qL.length*4.2+3;
+        doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+        doc.setTextColor(aRaw?TX[0]:160,aRaw?TX[1]:140,aRaw?TX[2]:120);
+        doc.text(aL,ML+8,ay+3);
+        y+=bH+3;
+      });
+      y+=4;
+    });
+
+    ck2(20);
+    doc.setFillColor(245,234,216);doc.roundedRect(ML,y,CW,18,2,2,'F');
+    doc.setDrawColor(TL[0],TL[1],TL[2]);doc.setLineWidth(0.4);doc.roundedRect(ML,y,CW,18,2,2,'S');
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(TD[0],TD[1],TD[2]);
+    doc.text('Muchas gracias por tu confianza y tu sinceridad.',PW/2,y+7,{align:'center'});
+    doc.setFont('helvetica','italic');doc.setFontSize(7.5);doc.setTextColor(107,74,48);
+    doc.text('Con esta información prepararé tu protocolo personalizado con todo el cuidado que mereces.',PW/2,y+13,{align:'center'});
+
+    var tot=doc.getNumberOfPages();
+    for(var p=1;p<=tot;p++){
+      doc.setPage(p);
+      doc.setFillColor(TD[0],TD[1],TD[2]);doc.rect(0,287,PW,10,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(TL[0],TL[1],TL[2]);
+      doc.text('Información confidencial · Uso exclusivo terapéutico',ML,293);
+      doc.text('Página '+p+' de '+tot,PW-ML,293,{align:'right'});
+    }
+
+    var safe=nombre.replace(/[^a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s]/g,'').trim().replace(/\s+/g,'_')||'cliente';
+    var blob = doc.output('blob');
+    var url = URL.createObjectURL(blob);
+    window.open(url);
+  } catch(e){
+    alert('No se pudo generar el PDF. Por favor, haz capturas de pantalla de tus respuestas y envíaselas a Kiko por WhatsApp.');
+  }
+}
+
+// Inicializar todo
+(function(){
+  var fechaEl = document.getElementById('fecha');
+  if(fechaEl){
+    try{ fechaEl.value = new Date().toISOString().split('T')[0]; }catch(e){}
+  }
+})();
+bindRadios();
+bindCheckboxes();
+bindConsent();
+
+// Botón de descarga
+(function(){
+  var btn=document.querySelector('.btn-dl');
+  if(btn){
+    btn.removeAttribute('onclick');
+    onTap(btn, function(){ genPDF(); });
+  }
+})();
+</script>
+</body>
+</html>
